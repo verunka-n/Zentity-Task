@@ -6,6 +6,7 @@ This repository contains a Postman collection for interacting with Veronika's Bo
 
 ### Get All Books
 - **GET** `/books/{{bookId}}`
+**Response** `200`
 
 ### Get Book by ID
 - **GET** `/books/{{bookId}}`
