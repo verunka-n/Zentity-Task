@@ -1,0 +1,486 @@
+{
+	"info": {
+		"_postman_id": "87e12d4e-6b4e-4719-96e1-95a735a4d808",
+		"name": "Veronika's Mock Server",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "24180628",
+		"_collection_link": "https://bold-escape-565694.postman.co/workspace/test~c7c077cd-cf3a-435c-bc4d-8f93d51f7f71/collection/24180628-87e12d4e-6b4e-4719-96e1-95a735a4d808?action=share&source=collection_link&creator=24180628"
+	},
+	"item": [
+		{
+			"name": "Get All Books2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"console.log(\"Fetching all books\");"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 OK\", function () {\r",
+							"    if (pm.response.code === 200) {\r",
+							"        console.log(\"Status code is 200 OK\");\r",
+							"    } else {\r",
+							"        console.error(\"Status code is not 200 OK. Actual status code: \" + pm.response.code);\r",
+							"    }\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body is a JSON object\", function () {\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"pm.expect(pm.response.responseTime).to.be.below(3000); \r",
+							"\r",
+							"pm.test(\"All books were found\", function () {\r",
+							"    const responseBody = pm.response.json();\r",
+							"    if (pm.response.code === 200 && Array.isArray(responseBody) && responseBody.length > 0) {\r",
+							"        console.log(\"All books were found successfully.\");\r",
+							"    } else {\r",
+							"        console.error(\"No books were found or response is not valid.\");\r",
+							"    }\r",
+							"    pm.expect(responseBody).to.be.an('array').that.is.not.empty;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{url}}/books"
+			},
+			"response": [
+				{
+					"name": "Default",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "{{url}}/books"
+					},
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "[\n    {\n        \"bookId\": \"1001\",\n        \"title\": \"1984\",\n        \"author\": \"George Orwell\",\n        \"description\": \"1984 is a dystopian novel by George Orwell published in 1949. The novel is set in Airstrip One, a province of the superstate Oceania in a world of perpetual war, omnipresent government surveillance, and public manipulation.\",\n        \"publicationYear\": \"1949\"\n    },\n    {\n        \"bookId\": \"1002\",\n        \"title\": \"Animal Farm\",\n        \"author\": \"George Orwell\",\n        \"description\": \"Animal Farm is an allegorical novella by George Orwell, first published in England on 17 August 1945. The book tells the story of a group of farm animals who rebel against their human farmer, hoping to create a society where the animals can be equal, free, and happy.\",\n        \"publicationYear\": \"1945\"\n    }\n]\n"
+				}
+			]
+		},
+		{
+			"name": "Get Book Information by Id 2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"console.log(\"Fetching book with bookId:\", pm.variables.get(\"bookId\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body is a JSON object\", function () {\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"pm.expect(pm.response.responseTime).to.be.below(3000); \r",
+							"\r",
+							"pm.test(\"Book with bookId was found\", function () {\r",
+							"    const responseBody = pm.response.json();\r",
+							"\r",
+							"    if (Array.isArray(responseBody) && responseBody.length > 0) {\r",
+							"        console.log(\"Book with bookId\", pm.variables.get(\"bookId\"), \"was found successfully.\");\r",
+							"    } else {\r",
+							"        \r",
+							"        console.log(\"Book with bookId\", pm.variables.get(\"bookId\"), \"was not found.\");\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{url}}/books/{{bookId}}"
+			},
+			"response": [
+				{
+					"name": "Default",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "{{url}}/books/bookId"
+					},
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"bookId\": \"1001\",\n    \"title\": \"1984\",\n    \"author\": \"George Orwell\",\n    \"description\": \"1984 is a dystopian novel by George Orwell published in 1949. The novel is set in Airstrip One, a province of the superstate Oceania in a world of perpetual war, omnipresent government surveillance, and public manipulation.\",\n    \"publicationYear\": \"1949\"\n}\n"
+				}
+			]
+		},
+		{
+			"name": "Get Books by Author 2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const authorFirstName = pm.variables.get(\"authorFirstName\");\r",
+							"const authorLastName = pm.variables.get(\"authorLastName\");\r",
+							"\r",
+							"const authorFullName = authorFirstName + \" \" + authorLastName;\r",
+							"\r",
+							"console.log(\"Fetching books by:\", authorFullName);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const authorFirstName = pm.variables.get(\"authorFirstName\");\r",
+							"const authorLastName = pm.variables.get(\"authorLastName\");\r",
+							"\r",
+							"const authorFullName = authorFirstName + \" \" + authorLastName;\r",
+							"\r",
+							"pm.test(\"Status code is 200 OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body is a JSON object\", function () {\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+							"\r",
+							"pm.test(\"Books by author were found\", function () {\r",
+							"    const responseBody = pm.response.json();\r",
+							"    \r",
+							"    // Check if any books are found by the specified author\r",
+							"    if (responseBody.length > 0) {\r",
+							"        console.log(\"Books by author found:\", authorFullName);\r",
+							"        pm.expect(responseBody).to.be.an('array');\r",
+							"    } else {\r",
+							"        console.log(\"No books found by author:\", authorFullName);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/books?author={{authorFirstName}}%20{{authorLastName}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"books"
+					],
+					"query": [
+						{
+							"key": "author",
+							"value": "{{authorFirstName}}%20{{authorLastName}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Default",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/books?author={{authorFirstName}}%20{{authorLastName}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"books"
+							],
+							"query": [
+								{
+									"key": "author",
+									"value": "{{authorFirstName}}%20{{authorLastName}}"
+								}
+							]
+						}
+					},
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "[\n    {\n        \"bookId\": \"1001\",\n        \"title\": \"1984\",\n        \"author\": \"George Orwell\",\n        \"description\": \"1984 is a dystopian novel by George Orwell published in 1949. The novel is set in Airstrip One, a province of the superstate Oceania in a world of perpetual war, omnipresent government surveillance, and public manipulation.\",\n        \"publicationYear\": \"1949\"\n    },\n    {\n        \"bookId\": \"1002\",\n        \"title\": \"Animal Farm\",\n        \"author\": \"George Orwell\",\n        \"description\": \"Animal Farm is an allegorical novella by George Orwell, first published in England on 17 August 1945. The book tells the story of a group of farm animals who rebel against their human farmer, hoping to create a society where the animals can be equal, free, and happy.\",\n        \"publicationYear\": \"1945\"\n    }\n]\n"
+				}
+			]
+		},
+		{
+			"name": "Add New Book 2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const originalBody = pm.request.body;\r",
+							"\r",
+							"const requestBody = JSON.parse(originalBody);\r",
+							"\r",
+							"const requiredFields = ['title', 'author', 'description', 'publicationYear'];\r",
+							"for (const field of requiredFields) {\r",
+							"    if (!requestBody[field]) {\r",
+							"        console.error(`Error: '${field}' is missing in the request body.`);\r",
+							"        throw new Error(`Missing required field: ${field}`);\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"const bookId = Math.random().toString(36).substring(7);\r",
+							"\r",
+							"requestBody.bookId = bookId;\r",
+							"\r",
+							"pm.request.body = {\r",
+							"    mode: 'raw',\r",
+							"    raw: JSON.stringify(requestBody)\r",
+							"};\r",
+							"\r",
+							"console.log(\"Request Body:\");\r",
+							"console.log(JSON.stringify(requestBody));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status is 201 (Created)\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Harry Potter and the Philosiphers Stone\",\r\n    \"author\": \"JK Rowling\",\r\n    \"description\": \"Harry Potter is a Wizard who goes to school at Hogwarts,he has a pet owl called Hedwig. Voldemort is evil\",\r\n    \"publicationYear\": \"1997\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{url}}/books"
+			},
+			"response": [
+				{
+					"name": "Default",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "{{url}}/books"
+					},
+					"code": 201,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Update Book information 2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const originalBody = pm.request.body;\r",
+							"\r",
+							"const requestBody = JSON.parse(originalBody);\r",
+							"\r",
+							"const requiredFields = ['title', 'author', 'description', 'publicationYear'];\r",
+							"for (const field of requiredFields) {\r",
+							"    if (!requestBody[field]) {\r",
+							"        console.error(`Error: '${field}' is missing in the request body.`);\r",
+							"        throw new Error(`Missing required field: ${field}`);\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"delete requestBody.bookId;\r",
+							"\r",
+							"pm.request.body = {\r",
+							"    mode: 'raw',\r",
+							"    raw: JSON.stringify(requestBody)\r",
+							"};\r",
+							"\r",
+							"console.log(\"Request Body:\");\r",
+							"console.log(JSON.stringify(requestBody));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Updated Title\",\r\n    \"author\": \"Updated Author\",\r\n    \"description\": \"Updated Description\",\r\n    \"publicationYear\": \"2023\"\r\n}"
+				},
+				"url": "{{url}}/books/{{bookId}}"
+			},
+			"response": [
+				{
+					"name": "Default",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "{{url}}/books/{{bookId}}"
+					},
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Delete book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"\r",
+							"    console.log(\"Book deleted successfully\")\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{url}}/books/{{bookId}}"
+			},
+			"response": [
+				{
+					"name": "Default",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "{{url}}/books/{{bookId}}"
+					},
+					"code": 204,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": ""
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "https://405c0bf7-d6d0-4abb-9eed-7e7b94d2d7b9.mock.pstmn.io"
+		}
+	]
+}
